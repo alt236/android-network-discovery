@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/discover"
+                android:drawableLeft="@drawable/ic_action_search"
                 android:drawablePadding="15dip"
                 android:text="@string/btn_scan"
                 style="@style/ButtonTop" />

@@ -8,23 +8,19 @@ package info.lamatricexiste.network;
 import info.lamatricexiste.network.Network.HardwareAddress;
 import info.lamatricexiste.network.Network.HostBean;
 import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Network.Ping;
 import info.lamatricexiste.network.Network.RateControl;
 import info.lamatricexiste.network.Utils.Prefs;
 import info.lamatricexiste.network.Utils.Save;
 
 import java.io.IOException;
-import java.lang.IllegalArgumentException;
-import java.net.InetSocketAddress;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.util.Log;
 
 public class DefaultDiscovery extends AbstractDiscovery {

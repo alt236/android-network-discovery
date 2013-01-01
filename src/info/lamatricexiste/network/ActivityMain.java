@@ -57,14 +57,14 @@ final public class ActivityMain extends Activity {
                 super(ActivityMain.this, Db.DB_PROBES, "probes", "regex", 298);
             }
 
-            protected void onPostExecute(Void unused) {
-                super.onPostExecute(unused);
+            protected void onCancelled() {
+                super.onCancelled();
                 final Activity d = mActivity.get();
                 phase3(d);
             }
 
-            protected void onCancelled() {
-                super.onCancelled();
+            protected void onPostExecute(Void unused) {
+                super.onPostExecute(unused);
                 final Activity d = mActivity.get();
                 phase3(d);
             }
@@ -75,14 +75,14 @@ final public class ActivityMain extends Activity {
                 super(ActivityMain.this, Db.DB_NIC, "oui", "mac", 253);
             }
 
-            protected void onPostExecute(Void unused) {
-                super.onPostExecute(unused);
+            protected void onCancelled() {
+                super.onCancelled();
                 final Activity d = mActivity.get();
                 new DbUpdateProbes();
             }
 
-            protected void onCancelled() {
-                super.onCancelled();
+            protected void onPostExecute(Void unused) {
+                super.onPostExecute(unused);
                 final Activity d = mActivity.get();
                 new DbUpdateProbes();
             }
@@ -133,21 +133,6 @@ final public class ActivityMain extends Activity {
 
         public CreateServicesDb(Activity activity) {
             mActivity = new WeakReference<Activity>(activity);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            final Activity d = mActivity.get();
-            if (d != null) {
-                try {
-                    d.setProgressBarIndeterminateVisibility(true);
-                    progress = ProgressDialog.show(d, "", d.getString(R.string.task_services));
-                } catch (Exception e) {
-                    if (e != null) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                }
-            }
         }
 
         @Override
@@ -204,6 +189,21 @@ final public class ActivityMain extends Activity {
                     Log.e(TAG, e.getMessage());
                 } finally {
                     d.startDiscoverActivity(d);
+                }
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            final Activity d = mActivity.get();
+            if (d != null) {
+                try {
+                    d.setProgressBarIndeterminateVisibility(true);
+                    progress = ProgressDialog.show(d, "", d.getString(R.string.task_services));
+                } catch (Exception e) {
+                    if (e != null) {
+                        Log.e(TAG, e.getMessage());
+                    }
                 }
             }
         }

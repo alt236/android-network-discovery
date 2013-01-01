@@ -39,9 +39,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -588,7 +588,7 @@ final public class ActivityPortscan extends TabActivity {
         scanPortTask = new ScanPortTask(this, host.ipAddress, getTimeout());
         scanPortTask.execute();
         btn_scan.setText(R.string.btn_discover_cancel);
-        btn_scan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.cancel, 0, 0, 0);
+        btn_scan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_navigation_cancel, 0, 0, 0);
         btn_scan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 scanPortTask.cancel(true);
@@ -606,7 +606,7 @@ final public class ActivityPortscan extends TabActivity {
         setProgressBarIndeterminateVisibility(false);
         setProgress(PROGRESS_MAX);
         btn_scan.setText(R.string.btn_scan);
-        btn_scan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.discover, 0, 0, 0);
+        btn_scan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_search, 0, 0, 0);
         btn_scan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startScan();

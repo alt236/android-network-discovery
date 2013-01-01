@@ -11,7 +11,6 @@ import info.lamatricexiste.network.Network.DownloadFile;
 import info.lamatricexiste.network.Network.NetInfo;
 
 import java.io.IOException;
-import java.lang.NullPointerException;
 import java.lang.ref.WeakReference;
 
 import android.app.Activity;
@@ -19,8 +18,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;

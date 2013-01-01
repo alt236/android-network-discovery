@@ -6,9 +6,6 @@
 package info.lamatricexiste.network.Utils;
 
 import info.lamatricexiste.network.Network.HostBean;
-
-import java.lang.IllegalStateException;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
