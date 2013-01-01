@@ -77,13 +77,13 @@ final public class ActivityMain extends Activity {
 
             protected void onCancelled() {
                 super.onCancelled();
-                final Activity d = mActivity.get();
+                //final Activity d = mActivity.get();
                 new DbUpdateProbes();
             }
 
             protected void onPostExecute(Void unused) {
                 super.onPostExecute(unused);
-                final Activity d = mActivity.get();
+                //final Activity d = mActivity.get();
                 new DbUpdateProbes();
             }
         }

@@ -199,7 +199,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
                     return;
                 }
                 // Custom check
-                int port;
+                //int port;
                 // TODO: Get ports from options
                 Socket s = new Socket();
                 for (int i = 0; i < DPORTS.length; i++) {

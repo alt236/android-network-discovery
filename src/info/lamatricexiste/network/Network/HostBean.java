@@ -88,8 +88,8 @@ public class HostBean implements Parcelable {
         portsClosed = in.readArrayList(Integer.class.getClassLoader());
     }
 
-    @SuppressWarnings("unchecked")
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+    @SuppressWarnings("rawtypes")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public HostBean createFromParcel(Parcel in) {
             return new HostBean(in);
         }
