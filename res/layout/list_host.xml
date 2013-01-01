@@ -36,7 +36,13 @@
             android:ellipsize="start"
             android:maxLines="2"
             android:text="List" />
-
+        
+        <TextView
+            android:id="@+id/userName"
+            style="@style/ListTextHighlighted"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+        
         <TextView
             android:id="@+id/mac"
             style="@style/ListTextSummary"

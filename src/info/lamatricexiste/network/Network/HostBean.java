@@ -25,6 +25,7 @@ public class HostBean implements Parcelable {
     public static final String EXTRA_PORTSO = ActivityMain.PKG + ".extra_ports_o";
     public static final String EXTRA_PORTSC = ActivityMain.PKG + ".extra_ports_c";
     public static final String EXTRA_SERVICES = ActivityMain.PKG + ".extra_services";
+    public static final String EXTRA_USER_GIVEN_NAME = ActivityMain.PKG + ".extra_host_user_given_name";
     public static final int TYPE_GATEWAY = 0;
     public static final int TYPE_COMPUTER = 1;
 
@@ -36,6 +37,7 @@ public class HostBean implements Parcelable {
     public String hostname = null;
     public String hardwareAddress = NetInfo.NOMAC;
     public String nicVendor = "Unknown";
+    public String userGivenName = "";
     public String os = "Unknown";
     public HashMap<Integer, String> services = null;
     public HashMap<Integer, String> banners = null;
@@ -69,6 +71,7 @@ public class HostBean implements Parcelable {
         dest.writeMap(banners);
         dest.writeList(portsOpen);
         dest.writeList(portsClosed);
+        dest.writeString(userGivenName);
     }
 
     @SuppressWarnings("unchecked")
@@ -86,6 +89,7 @@ public class HostBean implements Parcelable {
         banners = in.readHashMap(null);
         portsOpen = in.readArrayList(Integer.class.getClassLoader());
         portsClosed = in.readArrayList(Integer.class.getClassLoader());
+        userGivenName = in.readString();
     }
 
     @SuppressWarnings("rawtypes")

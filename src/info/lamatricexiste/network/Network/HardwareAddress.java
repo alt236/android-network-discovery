@@ -12,6 +12,7 @@ import info.lamatricexiste.network.Utils.Db;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +31,7 @@ public class HardwareAddress {
     // 0x2 is ARP Flag: completed entry (ha valid)
     private final static String MAC_RE = "^%s\\s+0x1\\s+0x2\\s+([:0-9a-fA-F]+)\\s+\\*\\s+\\w+$";
     private final static int BUF = 8 * 1024;
-    //private WeakReference<Activity> mActivity;
+    private WeakReference<Activity> mActivity;
 
     public HardwareAddress(Activity activity) {
     }

@@ -9,6 +9,7 @@ import info.lamatricexiste.network.Network.HardwareAddress;
 import info.lamatricexiste.network.Network.HostBean;
 import info.lamatricexiste.network.Network.NetInfo;
 import info.lamatricexiste.network.Network.RateControl;
+import info.lamatricexiste.network.Network.UserCommentry;
 import info.lamatricexiste.network.Utils.Prefs;
 import info.lamatricexiste.network.Utils.Save;
 
@@ -177,6 +178,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 host.hardwareAddress = HardwareAddress.getHardwareAddress(addr);
                 if(!NetInfo.NOMAC.equals(host.hardwareAddress)){
                     Log.e(TAG, "found using arp #1 "+addr);
+                    setUserFields(host);
                     publish(host);
                     return;
                 }
@@ -189,12 +191,14 @@ public class DefaultDiscovery extends AbstractDiscovery {
                         mRateControl.indicator = addr;
                         mRateControl.adaptRate();
                     }
+                    setUserFields(host);
                     return;
                 }
                 // Arp Check #2
                 host.hardwareAddress = HardwareAddress.getHardwareAddress(addr);
                 if(!NetInfo.NOMAC.equals(host.hardwareAddress)){
                     Log.e(TAG, "found using arp #2 "+addr);
+                    setUserFields(host);
                     publish(host);
                     return;
                 }
@@ -226,11 +230,15 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 */
                 // Arp Check #3
                 host.hardwareAddress = HardwareAddress.getHardwareAddress(addr);
+                
                 if(!NetInfo.NOMAC.equals(host.hardwareAddress)){
+                	setUserFields(host);
                     Log.e(TAG, "found using arp #3 "+addr);
                     publish(host);
                     return;
                 }
+                
+                
                 publish(null);
 
             } catch (IOException e) {
@@ -240,6 +248,11 @@ public class DefaultDiscovery extends AbstractDiscovery {
         }
     }
 
+    
+    private void setUserFields(HostBean bean){
+    	bean.userGivenName = UserCommentry.getDeviceName(bean.hardwareAddress);
+    }
+    
     private void publish(final HostBean host) {
         hosts_done++;
         if(host == null){

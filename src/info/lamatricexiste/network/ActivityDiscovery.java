@@ -502,11 +502,13 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                 holder.mac = (TextView) convertView.findViewById(R.id.mac);
                 holder.vendor = (TextView) convertView.findViewById(R.id.vendor);
                 holder.logo = (ImageView) convertView.findViewById(R.id.logo);
+                holder.userGivenName = (TextView) convertView.findViewById(R.id.userName);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             final HostBean host = hosts.get(position);
+            
             if (host.deviceType == HostBean.TYPE_GATEWAY) {
                 holder.logo.setImageResource(R.drawable.router);
             } else if (host.isAlive == 1 || !host.hardwareAddress.equals(NetInfo.NOMAC)) {
@@ -514,11 +516,13 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             } else {
                 holder.logo.setImageResource(R.drawable.computer_down);
             }
+            
             if (host.hostname != null && !host.hostname.equals(host.ipAddress)) {
                 holder.host.setText(host.hostname + " (" + host.ipAddress + ")");
             } else {
                 holder.host.setText(host.ipAddress);
             }
+            
             if (!host.hardwareAddress.equals(NetInfo.NOMAC)) {
                 holder.mac.setText(host.hardwareAddress);
                 if(host.nicVendor != null){
@@ -532,6 +536,14 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                 holder.mac.setVisibility(View.GONE);
                 holder.vendor.setVisibility(View.GONE);
             }
+            
+            if(host.userGivenName != null){
+            	holder.userGivenName.setText(host.userGivenName);
+            	holder.userGivenName.setVisibility(View.VISIBLE);
+            } else {
+            	holder.userGivenName.setVisibility(View.GONE);
+            }
+            
             return convertView;
         }
     }
@@ -540,6 +552,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         TextView host;
         TextView mac;
         TextView vendor;
+        TextView userGivenName;
         ImageView logo;
     }
 }
