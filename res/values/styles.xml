@@ -51,7 +51,7 @@
     </style>
 
     <style name="ListTextTitle" parent="ListText">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">@color/highlight</item>
         <item name="android:textSize">15sp</item>
     </style>
 
@@ -61,7 +61,7 @@
     </style>
 
     <style name="ListTextHighlighted" parent="ListTextSummary">
-        <item name="android:textColor">@color/list_highlight</item>
+        <item name="android:textColor">@color/highlight</item>
     </style>
     
 </resources>

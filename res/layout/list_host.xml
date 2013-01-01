@@ -36,18 +36,20 @@
             android:ellipsize="start"
             android:maxLines="2"
             android:text="List" />
-        
+
         <TextView
             android:id="@+id/userName"
             style="@style/ListTextHighlighted"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-        
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp" />
+
         <TextView
             android:id="@+id/mac"
             style="@style/ListTextSummary"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:text="" />
 
         <TextView
@@ -57,6 +59,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
+            android:paddingLeft="5dp"
             android:text="" />
     </LinearLayout>
 

@@ -44,6 +44,12 @@
             android:typeface="monospace" />
     </LinearLayout>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/highlight" >
+    </View>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -62,6 +68,12 @@
             android:drawableLeft="@drawable/ic_action_settings"
             android:text="@string/btn_options" />
     </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/highlight" >
+    </View>
 
     <FrameLayout
         android:layout_width="fill_parent"
