@@ -95,8 +95,7 @@ final public class ActivityPortscan extends TabActivity {
                 host.position = extras.getInt(HostBean.EXTRA_POSITION);
                 host.portsOpen = intArrayToArrayList(extras.getIntArray(HostBean.EXTRA_PORTSO));
                 host.portsClosed = intArrayToArrayList(extras.getIntArray(HostBean.EXTRA_PORTSC));
-                host.responseTime = extras.getInt(HostBean.EXTRA_TIMEOUT, Integer
-                        .parseInt(Prefs.DEFAULT_TIMEOUT_PORTSCAN));
+                host.responseTime = extras.getInt(HostBean.EXTRA_TIMEOUT, Integer.parseInt(Prefs.DEFAULT_TIMEOUT_PORTSCAN));
                 // FIXME: banners and services not supported (HashMap's)
             }
         }

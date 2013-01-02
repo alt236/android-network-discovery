@@ -7,6 +7,7 @@
 package info.lamatricexiste.network.Network;
 
 import info.lamatricexiste.network.ActivityMain;
+import info.lamatricexiste.network.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class HostBean implements Parcelable {
     public static final String EXTRA_PORTSC = ActivityMain.PKG + ".extra_ports_c";
     public static final String EXTRA_SERVICES = ActivityMain.PKG + ".extra_services";
     public static final String EXTRA_USER_GIVEN_NAME = ActivityMain.PKG + ".extra_host_user_given_name";
+    public static final String EXTRA_ICON = ActivityMain.PKG + ".extra_host_icon";
     public static final int TYPE_GATEWAY = 0;
     public static final int TYPE_COMPUTER = 1;
 
@@ -39,6 +41,7 @@ public class HostBean implements Parcelable {
     public String nicVendor = "Unknown";
     public String userGivenName = "";
     public String os = "Unknown";
+    public int icon = R.drawable.ic_network_device_network_lan;
     public HashMap<Integer, String> services = null;
     public HashMap<Integer, String> banners = null;
     public ArrayList<Integer> portsOpen = null;
@@ -53,25 +56,19 @@ public class HostBean implements Parcelable {
         readFromParcel(in);
     }
 
+    @SuppressWarnings("rawtypes")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public HostBean createFromParcel(Parcel in) {
+            return new HostBean(in);
+        }
+
+        public HostBean[] newArray(int size) {
+            return new HostBean[size];
+        }
+    };
+
     public int describeContents() {
         return 0;
-    }
-
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(deviceType);
-        dest.writeInt(isAlive);
-        dest.writeString(ipAddress);
-        dest.writeString(hostname);
-        dest.writeString(hardwareAddress);
-        dest.writeString(nicVendor);
-        dest.writeString(os);
-        dest.writeInt(responseTime);
-        dest.writeInt(position);
-        dest.writeMap(services);
-        dest.writeMap(banners);
-        dest.writeList(portsOpen);
-        dest.writeList(portsClosed);
-        dest.writeString(userGivenName);
     }
 
     @SuppressWarnings("unchecked")
@@ -90,16 +87,24 @@ public class HostBean implements Parcelable {
         portsOpen = in.readArrayList(Integer.class.getClassLoader());
         portsClosed = in.readArrayList(Integer.class.getClassLoader());
         userGivenName = in.readString();
+        icon = in.readInt();
     }
 
-    @SuppressWarnings("rawtypes")
-	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public HostBean createFromParcel(Parcel in) {
-            return new HostBean(in);
-        }
-
-        public HostBean[] newArray(int size) {
-            return new HostBean[size];
-        }
-    };
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(deviceType);
+        dest.writeInt(isAlive);
+        dest.writeString(ipAddress);
+        dest.writeString(hostname);
+        dest.writeString(hardwareAddress);
+        dest.writeString(nicVendor);
+        dest.writeString(os);
+        dest.writeInt(responseTime);
+        dest.writeInt(position);
+        dest.writeMap(services);
+        dest.writeMap(banners);
+        dest.writeList(portsOpen);
+        dest.writeList(portsClosed);
+        dest.writeString(userGivenName);
+        dest.writeInt(icon);
+    }
 }

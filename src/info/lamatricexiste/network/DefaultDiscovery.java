@@ -251,6 +251,8 @@ public class DefaultDiscovery extends AbstractDiscovery {
     
     private void setUserFields(HostBean bean){
     	bean.userGivenName = UserCommentry.getDeviceName(bean.hardwareAddress);
+    	bean.icon = UserCommentry.getDeviceIcon(bean.hardwareAddress, R.drawable.ic_network_device_network_lan);
+    	Log.e(TAG, ">> GOT ICON: " + bean.icon);
     }
     
     private void publish(final HostBean host) {

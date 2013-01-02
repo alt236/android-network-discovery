@@ -23,6 +23,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -510,11 +512,13 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             final HostBean host = hosts.get(position);
             
             if (host.deviceType == HostBean.TYPE_GATEWAY) {
-                holder.logo.setImageResource(R.drawable.router);
+                holder.logo.setImageResource(R.drawable.ic_network_device_internet);
             } else if (host.isAlive == 1 || !host.hardwareAddress.equals(NetInfo.NOMAC)) {
-                holder.logo.setImageResource(R.drawable.computer);
+                holder.logo.setImageResource(host.icon);
+                holder.logo.setColorFilter(null);
             } else {
-                holder.logo.setImageResource(R.drawable.computer_down);
+                holder.logo.setImageResource(host.icon);
+                holder.logo.setColorFilter(Color.parseColor("#DD0000"), Mode.MULTIPLY);
             }
             
             if (host.hostname != null && !host.hostname.equals(host.ipAddress)) {

@@ -61,7 +61,7 @@
     </style>
 
     <style name="ListTextHighlighted" parent="ListTextSummary">
-        <item name="android:textColor">@color/highlight</item>
+        <item name="android:textColor">@color/highlight2</item>
     </style>
     
 </resources>
