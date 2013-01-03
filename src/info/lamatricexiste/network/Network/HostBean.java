@@ -37,10 +37,11 @@ public class HostBean implements Parcelable {
     public int responseTime = 0; // ms
     public String ipAddress = null;
     public String hostname = null;
-    public String hardwareAddress = NetInfo.NOMAC;
+    private String hardwareAddress = NetInfo.NOMAC;
     public String nicVendor = "Unknown";
     public String userGivenName = "";
     public String os = "Unknown";
+    public boolean isThisThisDevice = false;
     public int icon = R.drawable.ic_network_device_network_lan;
     public HashMap<Integer, String> services = null;
     public HashMap<Integer, String> banners = null;
@@ -56,7 +57,20 @@ public class HostBean implements Parcelable {
         readFromParcel(in);
     }
 
-    @SuppressWarnings("rawtypes")
+    public String getHardwareAddress() {
+		return hardwareAddress;
+	}
+
+	public void setHardwareAddress(String hardwareAddress) {
+		
+		if(hardwareAddress == null || hardwareAddress.length() < 1){
+			this.hardwareAddress = NetInfo.NOMAC;
+		} else {
+			this.hardwareAddress = hardwareAddress.toUpperCase();
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public HostBean createFromParcel(Parcel in) {
             return new HostBean(in);

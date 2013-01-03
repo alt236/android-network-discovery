@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
-import android.util.Log;
 
 public class UserCommentry {
 
@@ -48,5 +47,10 @@ public class UserCommentry {
 		Map<String, String> result = new HashMap<String, String>();
 
 		return Collections.unmodifiableMap(result);
+	}
+
+	public static int getDeviceIcon(String hardwareAddress, int defaultId) {
+		// TODO Auto-generated method stub
+		return defaultId;
 	}
 }

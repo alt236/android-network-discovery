@@ -37,11 +37,15 @@ public class DefaultDiscovery extends AbstractDiscovery {
     private boolean doRateControl;
     private RateControl mRateControl;
     private Save mSave;
-
-    public DefaultDiscovery(ActivityDiscovery discover) {
+    private String mMyIp;
+    private String mMyMac;
+    
+    public DefaultDiscovery(ActivityDiscovery discover, String myIp, String myMac) {
         super(discover);
         mRateControl = new RateControl();
         mSave = new Save();
+        mMyIp = myIp;
+        mMyMac = myMac;
     }
 
     @Override
@@ -175,8 +179,8 @@ public class DefaultDiscovery extends AbstractDiscovery {
                     mRateControl.adaptRate();
                 }
                 // Arp Check #1
-                host.hardwareAddress = HardwareAddress.getHardwareAddress(addr);
-                if(!NetInfo.NOMAC.equals(host.hardwareAddress)){
+                host.setHardwareAddress(HardwareAddress.getHardwareAddress(addr));
+                if(!NetInfo.NOMAC.equals(host.getHardwareAddress())){
                     Log.e(TAG, "found using arp #1 "+addr);
                     setUserFields(host);
                     publish(host);
@@ -195,8 +199,8 @@ public class DefaultDiscovery extends AbstractDiscovery {
                     return;
                 }
                 // Arp Check #2
-                host.hardwareAddress = HardwareAddress.getHardwareAddress(addr);
-                if(!NetInfo.NOMAC.equals(host.hardwareAddress)){
+                host.setHardwareAddress(HardwareAddress.getHardwareAddress(addr));
+                if(!NetInfo.NOMAC.equalsIgnoreCase(host.getHardwareAddress())){
                     Log.e(TAG, "found using arp #2 "+addr);
                     setUserFields(host);
                     publish(host);
@@ -229,9 +233,9 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 }
                 */
                 // Arp Check #3
-                host.hardwareAddress = HardwareAddress.getHardwareAddress(addr);
+                host.setHardwareAddress(HardwareAddress.getHardwareAddress(addr));
                 
-                if(!NetInfo.NOMAC.equals(host.hardwareAddress)){
+                if(!NetInfo.NOMAC.equalsIgnoreCase(host.getHardwareAddress())){
                 	setUserFields(host);
                     Log.e(TAG, "found using arp #3 "+addr);
                     publish(host);
@@ -250,9 +254,8 @@ public class DefaultDiscovery extends AbstractDiscovery {
 
     
     private void setUserFields(HostBean bean){
-    	bean.userGivenName = UserCommentry.getDeviceName(bean.hardwareAddress);
-    	bean.icon = UserCommentry.getDeviceIcon(bean.hardwareAddress, R.drawable.ic_network_device_network_lan);
-    	Log.e(TAG, ">> GOT ICON: " + bean.icon);
+    	bean.userGivenName = UserCommentry.getDeviceName(bean.getHardwareAddress());
+    	bean.icon = UserCommentry.getDeviceIcon(bean.getHardwareAddress(), R.drawable.ic_network_device_network_lan);
     }
     
     private void publish(final HostBean host) {
@@ -265,13 +268,27 @@ public class DefaultDiscovery extends AbstractDiscovery {
         if (mDiscover != null) {
             final ActivityDiscovery discover = mDiscover.get();
             if (discover != null) {
+//            	Log.d(TAG, ">> ============ ");
+//            	Log.d(TAG, ">> Bean IP  = " + host.ipAddress);
+//            	Log.d(TAG, ">> Bean MAC = " + host.getHardwareAddress());
+//            	Log.d(TAG, ">> My IP    = " + mMyIp);
+//            	Log.d(TAG, ">> My MAC   = " + mMyMac);
+            	
                 // Mac Addr not already detected
-                if(NetInfo.NOMAC.equals(host.hardwareAddress)){
-                    host.hardwareAddress = HardwareAddress.getHardwareAddress(host.ipAddress);
+                if(NetInfo.NOMAC.equalsIgnoreCase(host.getHardwareAddress())){
+                	host.setHardwareAddress(HardwareAddress.getHardwareAddress(host.ipAddress));
                 }
 
+                if(mMyIp != null && mMyIp.equals(host.ipAddress)){
+                	host.isThisThisDevice = true;
+                	
+                	if(NetInfo.NOMAC.equalsIgnoreCase(host.getHardwareAddress())){
+                		host.setHardwareAddress(mMyMac);
+                	}
+                } 
+                
                 // NIC vendor
-                host.nicVendor = HardwareAddress.getNicVendor(host.hardwareAddress);
+                host.nicVendor = HardwareAddress.getNicVendor(host.getHardwareAddress());
 
                 // Is gateway ?
                 if (discover.net.gatewayIp.equals(host.ipAddress)) {

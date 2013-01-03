@@ -56,10 +56,10 @@ public class DnsDiscovery extends AbstractDiscovery {
                             host.deviceType = 1;
                         }
                         // Mac Addr
-                        host.hardwareAddress = HardwareAddress.getHardwareAddress(host.ipAddress);
+                        host.setHardwareAddress(HardwareAddress.getHardwareAddress(host.ipAddress));
                         // NIC vendor
                         try {
-                            host.nicVendor = HardwareAddress.getNicVendor(host.hardwareAddress);
+                            host.nicVendor = HardwareAddress.getNicVendor(host.getHardwareAddress());
                         } catch (SQLiteDatabaseCorruptException e) {
                             Log.e(TAG, e.getMessage());
                         }

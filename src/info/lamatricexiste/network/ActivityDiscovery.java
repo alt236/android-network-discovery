@@ -274,7 +274,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                             public void onClick(DialogInterface dialog, int which) {
                                 final String name = txt.getText().toString();
                                 host.hostname = name;
-                                s.setCustomName(name, host.hardwareAddress);
+                                s.setCustomName(name, host.getHardwareAddress());
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(ActivityDiscovery.this,
                                         R.string.discover_action_saved, Toast.LENGTH_SHORT).show();
@@ -283,7 +283,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                         rename.setNegativeButton(R.string.btn_remove, new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 host.hostname = null;
-                                s.removeCustomName(host.hardwareAddress);
+                                s.removeCustomName(host.getHardwareAddress());
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(ActivityDiscovery.this,
                                         R.string.discover_action_deleted, Toast.LENGTH_SHORT)
@@ -457,7 +457,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                 break;
             case 0:
             default:
-                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
+                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this, info_ip_raw_str, info_mac_str);
         }
         mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
         mDiscoveryTask.execute();
@@ -490,8 +490,11 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 
     // Custom ArrayAdapter
     private class HostsAdapter extends ArrayAdapter<Void> {
+    	private Context mContext;
+    	
         public HostsAdapter(Context ctxt) {
             super(ctxt, R.layout.list_host, R.id.list);
+            mContext = ctxt;
         }
 
         @Override
@@ -513,12 +516,16 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             
             if (host.deviceType == HostBean.TYPE_GATEWAY) {
                 holder.logo.setImageResource(R.drawable.ic_network_device_internet);
-            } else if (host.isAlive == 1 || !host.hardwareAddress.equals(NetInfo.NOMAC)) {
+            } else if (host.isAlive == 1 || !host.getHardwareAddress().equalsIgnoreCase(NetInfo.NOMAC)) {
                 holder.logo.setImageResource(host.icon);
                 holder.logo.setColorFilter(null);
             } else {
                 holder.logo.setImageResource(host.icon);
                 holder.logo.setColorFilter(Color.parseColor("#DD0000"), Mode.MULTIPLY);
+            }
+            
+            if(host.isThisThisDevice){
+            	holder.logo.setColorFilter(mContext.getResources().getColor(R.color.highlight_dark), Mode.MULTIPLY);
             }
             
             if (host.hostname != null && !host.hostname.equals(host.ipAddress)) {
@@ -527,8 +534,8 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                 holder.host.setText(host.ipAddress);
             }
             
-            if (!host.hardwareAddress.equals(NetInfo.NOMAC)) {
-                holder.mac.setText(host.hardwareAddress);
+            if (!host.getHardwareAddress().equalsIgnoreCase(NetInfo.NOMAC)) {
+                holder.mac.setText(host.getHardwareAddress());
                 if(host.nicVendor != null){
                     holder.vendor.setText(host.nicVendor);
                 } else {

@@ -26,10 +26,12 @@ public abstract class ActivityNet extends Activity {
     protected Context ctxt;
     protected SharedPreferences prefs = null;
     protected NetInfo net = null;
+    protected String info_ip_raw_str = "";
     protected String info_ip_str = "";
     protected String info_in_str = "";
     protected String info_mo_str = "";
-
+    protected String info_mac_str = "";
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,10 +121,12 @@ public abstract class ActivityNet extends Activity {
                         net.getWifiInfo();
                         if (net.ssid != null) {
                             net.getIp();
+                            info_ip_raw_str = net.ip;
                             info_ip_str = getString(R.string.net_ip, net.ip, net.cidr, net.intf);
                             info_in_str = getString(R.string.net_ssid, net.ssid);
                             info_mo_str = getString(R.string.net_mode, getString(
                                     R.string.net_mode_wifi, net.speed, WifiInfo.LINK_SPEED_UNITS));
+                            info_mac_str = net.macAddress;
                             setButtons(false);
                         }
                     } else if (type == ConnectivityManager.TYPE_MOBILE) { // 3G
@@ -140,12 +144,10 @@ public abstract class ActivityNet extends Activity {
                         }
                     } else if (type == 3) { // ETH
                         Log.i(TAG, "Ethernet connectivity detected!");
-                        info_mo_str = getString(R.string.net_mode)
-                                + getString(R.string.net_mode_eth);
+                        info_mo_str = getString(R.string.net_mode) + getString(R.string.net_mode_eth);
                     } else {
                         Log.i(TAG, "Connectivity unknown!");
-                        info_mo_str = getString(R.string.net_mode)
-                                + getString(R.string.net_mode_unknown);
+                        info_mo_str = getString(R.string.net_mode) + getString(R.string.net_mode_unknown);
                     }
                 } else {
                     cancelTasks();

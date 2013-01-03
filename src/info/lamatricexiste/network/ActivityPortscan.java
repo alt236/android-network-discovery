@@ -122,15 +122,15 @@ final public class ActivityPortscan extends TabActivity {
 
         // MAC Address
         TextView hw = (TextView) findViewById(R.id.mac);
-        if (host.hardwareAddress != null && !host.hardwareAddress.equals(NetInfo.NOMAC)) {
-            hw.setText(host.hardwareAddress);
+        if (host.getHardwareAddress() != null && !host.getHardwareAddress().equalsIgnoreCase(NetInfo.NOMAC)) {
+            hw.setText(host.getHardwareAddress());
         } else {
             hw.setVisibility(View.GONE);
         }
 
         // Vendor name
         TextView nic = (TextView) findViewById(R.id.vendor);
-        if (host.nicVendor != null && !host.hardwareAddress.equals(NetInfo.NOMAC)) {
+        if (host.nicVendor != null && !host.getHardwareAddress().equalsIgnoreCase(NetInfo.NOMAC)) {
             nic.setText(host.nicVendor);
         } else {
             nic.setVisibility(View.GONE);

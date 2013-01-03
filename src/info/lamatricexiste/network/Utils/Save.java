@@ -30,7 +30,7 @@ public class Save {
         Cursor c = null;
         try {
             db = getDb();
-            c = db.rawQuery(SELECT, new String[] { host.hardwareAddress.replace(":", "").toUpperCase() });
+            c = db.rawQuery(SELECT, new String[] { host.getHardwareAddress().replace(":", "").toUpperCase() });
             if (c.moveToFirst()) {
                 name = c.getString(0);
             } else if(host.hostname != null) {

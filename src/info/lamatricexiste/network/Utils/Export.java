@@ -74,7 +74,7 @@ public class Export {
             for (int i = 0; i < hosts.size(); i++) {
                 // Host info
                 HostBean host = hosts.get(i);
-                xml += "\t\t<host ip=\"" + host.ipAddress + "\" mac=\"" + host.hardwareAddress
+                xml += "\t\t<host ip=\"" + host.ipAddress + "\" mac=\"" + host.getHardwareAddress()
                         + "\" vendor=\"" + host.nicVendor + "\">\r\n";
                 // Open Ports //TODO: rething the XML structure to include close
                 // and filtered ports
