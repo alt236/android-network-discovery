@@ -3,14 +3,18 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.activities;
 
-import info.lamatricexiste.network.Network.HostBean;
-import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Utils.Export;
-import info.lamatricexiste.network.Utils.Help;
-import info.lamatricexiste.network.Utils.Prefs;
-import info.lamatricexiste.network.Utils.Save;
+import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.network.HostBean;
+import info.lamatricexiste.network.network.NetInfo;
+import info.lamatricexiste.network.tasks.AbstractDiscovery;
+import info.lamatricexiste.network.tasks.DefaultDiscovery;
+import info.lamatricexiste.network.tasks.DnsDiscovery;
+import info.lamatricexiste.network.utils.Export;
+import info.lamatricexiste.network.utils.Help;
+import info.lamatricexiste.network.utils.Prefs;
+import info.lamatricexiste.network.utils.Save;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -28,11 +32,8 @@ import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -43,7 +44,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-final public class ActivityDiscovery extends ActivityNet implements OnItemClickListener {
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
+
+final public class ActivityDiscovery extends BaseNetActivity implements OnItemClickListener {
 
     private final String TAG = "ActivityDiscovery";
     public final static long VIBRATE = (long) 250;

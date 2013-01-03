@@ -1,8 +1,8 @@
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.activities;
 
-import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Utils.Prefs;
-import android.app.Activity;
+import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.network.NetInfo;
+import info.lamatricexiste.network.utils.Prefs;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public abstract class ActivityNet extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+
+public abstract class BaseNetActivity extends SherlockActivity {
 
     private final String TAG = "NetState";
     private ConnectivityManager connMgr;
@@ -32,39 +34,6 @@ public abstract class ActivityNet extends Activity {
     protected String info_mo_str = "";
     protected String info_mac_str = "";
     
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ctxt = getApplicationContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(ctxt);
-        connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        net = new NetInfo(ctxt);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        setButtons(true);
-        // Listening for network events
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
-        registerReceiver(receiver, filter);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        unregisterReceiver(receiver);
-    }
-
-    protected abstract void setInfo();
-
-    protected abstract void setButtons(boolean disable);
-
-    protected abstract void cancelTasks();
-
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context ctxt, Intent intent) {
             info_ip_str = "";
@@ -160,4 +129,45 @@ public abstract class ActivityNet extends Activity {
             setInfo();
         }
     };
+    
+    protected abstract void cancelTasks();
+    
+    public NetInfo getNetInfo(){
+    	return net;
+    }
+
+    public SharedPreferences getPrefs(){
+    	return prefs;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ctxt = getApplicationContext();
+        prefs = PreferenceManager.getDefaultSharedPreferences(ctxt);
+        connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        net = new NetInfo(ctxt);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setButtons(true);
+        // Listening for network events
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+        registerReceiver(receiver, filter);
+    }
+
+    protected abstract void setButtons(boolean disable);
+
+    protected abstract void setInfo();
 }

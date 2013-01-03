@@ -3,12 +3,13 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.activities;
 
-import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Utils.Db;
-import info.lamatricexiste.network.Utils.DbUpdate;
-import info.lamatricexiste.network.Utils.Prefs;
+import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.network.NetInfo;
+import info.lamatricexiste.network.utils.Db;
+import info.lamatricexiste.network.utils.DbUpdate;
+import info.lamatricexiste.network.utils.Prefs;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -28,7 +29,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
 
-final public class ActivityMain extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+
+final public class ActivityMain extends SherlockActivity {
 
     public final static String TAG = "ActivityMain";
     public static final String PKG = "info.lamatricexiste.network";

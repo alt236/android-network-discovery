@@ -3,9 +3,9 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.Utils;
+package info.lamatricexiste.network.utils;
 
-import info.lamatricexiste.network.Network.HostBean;
+import info.lamatricexiste.network.network.HostBean;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;

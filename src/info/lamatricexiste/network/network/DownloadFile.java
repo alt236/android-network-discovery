@@ -5,9 +5,9 @@
 
 // Taken from: http://github.com/ctrlaltdel/TahoeLAFS-android
 
-package info.lamatricexiste.network.Network;
+package info.lamatricexiste.network.network;
 
-import info.lamatricexiste.network.ActivityMain;
+import info.lamatricexiste.network.activities.ActivityMain;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

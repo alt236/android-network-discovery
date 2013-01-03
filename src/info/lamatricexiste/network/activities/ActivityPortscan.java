@@ -3,13 +3,15 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.activities;
 
-import info.lamatricexiste.network.Network.HostBean;
-import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Utils.Db;
-import info.lamatricexiste.network.Utils.Help;
-import info.lamatricexiste.network.Utils.Prefs;
+import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.network.HostBean;
+import info.lamatricexiste.network.network.NetInfo;
+import info.lamatricexiste.network.tasks.AsyncPortscan;
+import info.lamatricexiste.network.utils.Db;
+import info.lamatricexiste.network.utils.Help;
+import info.lamatricexiste.network.utils.Prefs;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -138,7 +140,7 @@ final public class ActivityPortscan extends TabActivity {
 
         // Scan
         btn_scan = (Button) findViewById(R.id.btn_scan);
-        if (extras.getBoolean(ActivityNet.EXTRA_WIFI) == false) {
+        if (extras.getBoolean(BaseNetActivity.EXTRA_WIFI) == false) {
             btn_scan.setClickable(false);
             btn_scan.setEnabled(false);
             btn_scan.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.disabled, 0, 0);

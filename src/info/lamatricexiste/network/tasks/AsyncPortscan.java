@@ -13,9 +13,9 @@
  * http://svn.apache.org/viewvc/mina/trunk/core/src/main/java/org/apache/mina/transport/socket/nio/
  */
 
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.tasks;
 
-import info.lamatricexiste.network.Utils.Prefs;
+import info.lamatricexiste.network.utils.Prefs;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;

@@ -3,15 +3,17 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.tasks;
 
-import info.lamatricexiste.network.Network.HardwareAddress;
-import info.lamatricexiste.network.Network.HostBean;
-import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Network.RateControl;
-import info.lamatricexiste.network.Network.UserCommentry;
-import info.lamatricexiste.network.Utils.Prefs;
-import info.lamatricexiste.network.Utils.Save;
+import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.activities.ActivityDiscovery;
+import info.lamatricexiste.network.network.HardwareAddress;
+import info.lamatricexiste.network.network.HostBean;
+import info.lamatricexiste.network.network.NetInfo;
+import info.lamatricexiste.network.network.RateControl;
+import info.lamatricexiste.network.network.UserCommentry;
+import info.lamatricexiste.network.utils.Prefs;
+import info.lamatricexiste.network.utils.Save;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -54,7 +56,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
         if (mDiscover != null) {
             final ActivityDiscovery discover = mDiscover.get();
             if (discover != null) {
-                doRateControl = discover.prefs.getBoolean(Prefs.KEY_RATECTRL_ENABLE,
+                doRateControl = discover.getPrefs().getBoolean(Prefs.KEY_RATECTRL_ENABLE,
                         Prefs.DEFAULT_RATECTRL_ENABLE);
             }
         }
@@ -149,7 +151,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
         if (mDiscover != null) {
             final ActivityDiscovery discover = mDiscover.get();
             if (discover != null) {
-                return Integer.parseInt(discover.prefs.getString(Prefs.KEY_TIMEOUT_DISCOVER,
+                return Integer.parseInt(discover.getPrefs().getString(Prefs.KEY_TIMEOUT_DISCOVER,
                         Prefs.DEFAULT_TIMEOUT_DISCOVER));
             }
         }
@@ -291,7 +293,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 host.nicVendor = HardwareAddress.getNicVendor(host.getHardwareAddress());
 
                 // Is gateway ?
-                if (discover.net.gatewayIp.equals(host.ipAddress)) {
+                if (discover.getNetInfo().gatewayIp.equals(host.ipAddress)) {
                     host.deviceType = HostBean.TYPE_GATEWAY;
                 }
 
@@ -299,7 +301,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 // Static
                 if ((host.hostname = mSave.getCustomName(host)) == null) {
                     // DNS
-                    if (discover.prefs.getBoolean(Prefs.KEY_RESOLVE_NAME,
+                    if (discover.getPrefs().getBoolean(Prefs.KEY_RESOLVE_NAME,
                             Prefs.DEFAULT_RESOLVE_NAME) == true) {
                         try {
                             host.hostname = (InetAddress.getByName(host.ipAddress)).getCanonicalHostName();

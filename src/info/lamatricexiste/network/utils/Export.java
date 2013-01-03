@@ -3,10 +3,10 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.Utils;
+package info.lamatricexiste.network.utils;
 
-import info.lamatricexiste.network.Network.HostBean;
-import info.lamatricexiste.network.Network.NetInfo;
+import info.lamatricexiste.network.network.HostBean;
+import info.lamatricexiste.network.network.NetInfo;
 
 import java.io.File;
 import java.io.FileWriter;

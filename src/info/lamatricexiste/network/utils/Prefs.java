@@ -3,11 +3,11 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.Utils;
+package info.lamatricexiste.network.utils;
 
-import info.lamatricexiste.network.ActivityMain;
 import info.lamatricexiste.network.R;
-import info.lamatricexiste.network.Network.NetInfo;
+import info.lamatricexiste.network.activities.ActivityMain;
+import info.lamatricexiste.network.network.NetInfo;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;

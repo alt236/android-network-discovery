@@ -3,9 +3,9 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.Utils;
+package info.lamatricexiste.network.utils;
 
-import info.lamatricexiste.network.Network.DownloadFile;
+import info.lamatricexiste.network.network.DownloadFile;
 
 import java.io.IOException;
 import java.io.OutputStream;

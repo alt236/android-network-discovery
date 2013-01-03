@@ -1,7 +1,9 @@
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.tasks;
 
-import info.lamatricexiste.network.Network.HostBean;
-import info.lamatricexiste.network.Utils.Prefs;
+import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.activities.ActivityDiscovery;
+import info.lamatricexiste.network.network.HostBean;
+import info.lamatricexiste.network.utils.Prefs;
 
 import java.lang.ref.WeakReference;
 
@@ -67,7 +69,7 @@ public abstract class AbstractDiscovery extends AsyncTask<Void, HostBean, Void> 
         if (mDiscover != null) {
             final ActivityDiscovery discover = mDiscover.get();
             if (discover != null) {
-                if (discover.prefs.getBoolean(Prefs.KEY_VIBRATE_FINISH,
+                if (discover.getPrefs().getBoolean(Prefs.KEY_VIBRATE_FINISH,
                         Prefs.DEFAULT_VIBRATE_FINISH) == true) {
                     Vibrator v = (Vibrator) discover.getSystemService(Context.VIBRATOR_SERVICE);
                     v.vibrate(ActivityDiscovery.VIBRATE);

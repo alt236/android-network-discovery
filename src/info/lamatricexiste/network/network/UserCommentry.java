@@ -5,7 +5,7 @@
 
 // http://standards.ieee.org/regauth/oui/oui.txt
 
-package info.lamatricexiste.network.Network;
+package info.lamatricexiste.network.network;
 
 import java.util.Collections;
 import java.util.HashMap;

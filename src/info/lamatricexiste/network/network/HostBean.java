@@ -4,10 +4,10 @@
  */
 
 // Inspired by http://connectbot.googlecode.com/svn/trunk/connectbot/src/org/connectbot/bean/HostBean.java
-package info.lamatricexiste.network.Network;
+package info.lamatricexiste.network.network;
 
-import info.lamatricexiste.network.ActivityMain;
 import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.activities.ActivityMain;
 
 import java.util.ArrayList;
 import java.util.HashMap;

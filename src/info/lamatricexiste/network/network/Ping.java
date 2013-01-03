@@ -3,7 +3,7 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.Network;
+package info.lamatricexiste.network.network;
 
 import java.net.InetAddress;
 

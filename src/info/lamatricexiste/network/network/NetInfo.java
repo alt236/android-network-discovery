@@ -4,9 +4,9 @@
  */
 
 //am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings
-package info.lamatricexiste.network.Network;
+package info.lamatricexiste.network.network;
 
-import info.lamatricexiste.network.Utils.Prefs;
+import info.lamatricexiste.network.utils.Prefs;
 
 import java.io.BufferedReader;
 import java.io.File;

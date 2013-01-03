@@ -3,12 +3,13 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network;
+package info.lamatricexiste.network.tasks;
 
-import info.lamatricexiste.network.Network.HardwareAddress;
-import info.lamatricexiste.network.Network.HostBean;
-import info.lamatricexiste.network.Network.NetInfo;
-import info.lamatricexiste.network.Utils.Prefs;
+import info.lamatricexiste.network.activities.ActivityDiscovery;
+import info.lamatricexiste.network.network.HardwareAddress;
+import info.lamatricexiste.network.network.HostBean;
+import info.lamatricexiste.network.network.NetInfo;
+import info.lamatricexiste.network.utils.Prefs;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -33,7 +34,7 @@ public class DnsDiscovery extends AbstractDiscovery {
                         + "), end=" + NetInfo.getIpFromLongUnsigned(end) + " (" + end
                         + "), length=" + size);
 
-                int timeout = Integer.parseInt(discover.prefs.getString(Prefs.KEY_TIMEOUT_DISCOVER,
+                int timeout = Integer.parseInt(discover.getPrefs().getString(Prefs.KEY_TIMEOUT_DISCOVER,
                         Prefs.DEFAULT_TIMEOUT_DISCOVER));
                 Log.i(TAG, "timeout=" + timeout + "ms");
 
@@ -52,7 +53,7 @@ public class DnsDiscovery extends AbstractDiscovery {
                     }
                     if (host.hostname != null && !host.hostname.equals(host.ipAddress)) {
                         // Is gateway ?
-                        if (discover.net.gatewayIp.equals(host.ipAddress)) {
+                        if (discover.getNetInfo().gatewayIp.equals(host.ipAddress)) {
                             host.deviceType = 1;
                         }
                         // Mac Addr
