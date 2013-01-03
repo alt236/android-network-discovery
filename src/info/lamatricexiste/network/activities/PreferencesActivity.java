@@ -3,10 +3,10 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.utils;
+package info.lamatricexiste.network.activities;
 
 import info.lamatricexiste.network.R;
-import info.lamatricexiste.network.activities.ActivityMain;
+import info.lamatricexiste.network.db.UpdateNicDb;
 import info.lamatricexiste.network.network.NetInfo;
 
 import java.net.NetworkInterface;
@@ -38,7 +38,7 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
-public class Prefs extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class PreferencesActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
     // TODO: Show values in summary
 
@@ -145,7 +145,7 @@ public class Prefs extends PreferenceActivity implements OnSharedPreferenceChang
         Preference resetdb = (Preference) ps.findPreference(KEY_RESET_NICDB);
         resetdb.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                new UpdateNicDb(Prefs.this);
+                new UpdateNicDb(PreferencesActivity.this);
                 return false;
             }
         });
@@ -238,7 +238,7 @@ public class Prefs extends PreferenceActivity implements OnSharedPreferenceChang
         // Version
         Preference version = (Preference) ps.findPreference(KEY_VERSION);
         try {
-            version.setSummary(getPackageManager().getPackageInfo(ActivityMain.PKG, 0).versionName);
+            version.setSummary(getPackageManager().getPackageInfo(MainActivity.PKG, 0).versionName);
         } catch (NameNotFoundException e) {
             version.setSummary("0.3.x");
         }

@@ -7,7 +7,7 @@
 
 package info.lamatricexiste.network.network;
 
-import info.lamatricexiste.network.utils.Db;
+import info.lamatricexiste.network.db.Db;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

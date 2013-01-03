@@ -6,10 +6,9 @@
 package info.lamatricexiste.network.activities;
 
 import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.db.Db;
+import info.lamatricexiste.network.db.DbUpdate;
 import info.lamatricexiste.network.network.NetInfo;
-import info.lamatricexiste.network.utils.Db;
-import info.lamatricexiste.network.utils.DbUpdate;
-import info.lamatricexiste.network.utils.Prefs;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -31,7 +30,7 @@ import android.view.Window;
 
 import com.actionbarsherlock.app.SherlockActivity;
 
-final public class ActivityMain extends SherlockActivity {
+final public class MainActivity extends SherlockActivity {
 
     public final static String TAG = "ActivityMain";
     public static final String PKG = "info.lamatricexiste.network";
@@ -48,7 +47,7 @@ final public class ActivityMain extends SherlockActivity {
 
         // Reset interface
         Editor edit = prefs.edit();
-        edit.putString(Prefs.KEY_INTF, Prefs.DEFAULT_INTF);
+        edit.putString(PreferencesActivity.KEY_INTF, PreferencesActivity.DEFAULT_INTF);
 
         phase2(ctxt);
     }
@@ -57,7 +56,7 @@ final public class ActivityMain extends SherlockActivity {
 
         class DbUpdateProbes extends DbUpdate {
             public DbUpdateProbes() {
-                super(ActivityMain.this, Db.DB_PROBES, "probes", "regex", 298);
+                super(MainActivity.this, Db.DB_PROBES, "probes", "regex", 298);
             }
 
             protected void onCancelled() {
@@ -75,7 +74,7 @@ final public class ActivityMain extends SherlockActivity {
 
         class DbUpdateNic extends DbUpdate {
             public DbUpdateNic() {
-                super(ActivityMain.this, Db.DB_NIC, "oui", "mac", 253);
+                super(MainActivity.this, Db.DB_NIC, "oui", "mac", 253);
             }
 
             protected void onCancelled() {
@@ -93,7 +92,7 @@ final public class ActivityMain extends SherlockActivity {
 
         // CheckNicDb
         try {
-            if (prefs.getInt(Prefs.KEY_RESET_NICDB, Prefs.DEFAULT_RESET_NICDB) != getPackageManager()
+            if (prefs.getInt(PreferencesActivity.KEY_RESET_NICDB, PreferencesActivity.DEFAULT_RESET_NICDB) != getPackageManager()
                     .getPackageInfo(PKG, 0).versionCode) {
                 new DbUpdateNic();
             } else {
@@ -104,7 +103,7 @@ final public class ActivityMain extends SherlockActivity {
             phase3(ctxt);
         } catch (ClassCastException e) {
             Editor edit = prefs.edit();
-            edit.putInt(Prefs.KEY_RESET_NICDB, 1);
+            edit.putInt(PreferencesActivity.KEY_RESET_NICDB, 1);
             edit.commit();
             phase3(ctxt);
         }
@@ -114,9 +113,9 @@ final public class ActivityMain extends SherlockActivity {
         // Install Services DB
 
         try {
-            if (prefs.getInt(Prefs.KEY_RESET_SERVICESDB, Prefs.DEFAULT_RESET_SERVICESDB) != getPackageManager()
+            if (prefs.getInt(PreferencesActivity.KEY_RESET_SERVICESDB, PreferencesActivity.DEFAULT_RESET_SERVICESDB) != getPackageManager()
                     .getPackageInfo(PKG, 0).versionCode) {
-                new CreateServicesDb(ActivityMain.this).execute();
+                new CreateServicesDb(MainActivity.this).execute();
             } else {
                 startDiscoverActivity(ctxt);
             }
@@ -126,7 +125,7 @@ final public class ActivityMain extends SherlockActivity {
     }
 
     private void startDiscoverActivity(final Context ctxt) {
-        startActivity(new Intent(ctxt, ActivityDiscovery.class));
+        startActivity(new Intent(ctxt, DiscoveryActivity.class));
         finish();
     }
 
@@ -177,7 +176,7 @@ final public class ActivityMain extends SherlockActivity {
 
         @Override
         protected void onPostExecute(Void unused) {
-            final ActivityMain d = (ActivityMain) mActivity.get();
+            final MainActivity d = (MainActivity) mActivity.get();
             if (d != null) {
                 d.setProgressBarIndeterminateVisibility(true);
                 if (progress.isShowing()) {
@@ -185,7 +184,7 @@ final public class ActivityMain extends SherlockActivity {
                 }
                 try {
                     Editor edit = prefs.edit();
-                    edit.putInt(Prefs.KEY_RESET_SERVICESDB, d.getPackageManager().getPackageInfo(
+                    edit.putInt(PreferencesActivity.KEY_RESET_SERVICESDB, d.getPackageManager().getPackageInfo(
                             PKG, 0).versionCode);
                     edit.commit();
                 } catch (NameNotFoundException e) {

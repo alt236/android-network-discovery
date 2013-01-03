@@ -6,14 +6,14 @@
 package info.lamatricexiste.network.tasks;
 
 import info.lamatricexiste.network.R;
-import info.lamatricexiste.network.activities.ActivityDiscovery;
+import info.lamatricexiste.network.activities.DiscoveryActivity;
+import info.lamatricexiste.network.activities.PreferencesActivity;
+import info.lamatricexiste.network.db.Save;
 import info.lamatricexiste.network.network.HardwareAddress;
 import info.lamatricexiste.network.network.HostBean;
 import info.lamatricexiste.network.network.NetInfo;
 import info.lamatricexiste.network.network.RateControl;
 import info.lamatricexiste.network.network.UserCommentry;
-import info.lamatricexiste.network.utils.Prefs;
-import info.lamatricexiste.network.utils.Save;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -42,7 +42,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
     private String mMyIp;
     private String mMyMac;
     
-    public DefaultDiscovery(ActivityDiscovery discover, String myIp, String myMac) {
+    public DefaultDiscovery(DiscoveryActivity discover, String myIp, String myMac) {
         super(discover);
         mRateControl = new RateControl();
         mSave = new Save();
@@ -54,10 +54,10 @@ public class DefaultDiscovery extends AbstractDiscovery {
     protected void onPreExecute() {
         super.onPreExecute();
         if (mDiscover != null) {
-            final ActivityDiscovery discover = mDiscover.get();
+            final DiscoveryActivity discover = mDiscover.get();
             if (discover != null) {
-                doRateControl = discover.getPrefs().getBoolean(Prefs.KEY_RATECTRL_ENABLE,
-                        Prefs.DEFAULT_RATECTRL_ENABLE);
+                doRateControl = discover.getPrefs().getBoolean(PreferencesActivity.KEY_RATECTRL_ENABLE,
+                        PreferencesActivity.DEFAULT_RATECTRL_ENABLE);
             }
         }
     }
@@ -65,7 +65,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
     @Override
     protected Void doInBackground(Void... params) {
         if (mDiscover != null) {
-            final ActivityDiscovery discover = mDiscover.get();
+            final DiscoveryActivity discover = mDiscover.get();
             if (discover != null) {
                 Log.v(TAG, "start=" + NetInfo.getIpFromLongUnsigned(start) + " (" + start
                         + "), end=" + NetInfo.getIpFromLongUnsigned(end) + " (" + end
@@ -149,10 +149,10 @@ public class DefaultDiscovery extends AbstractDiscovery {
         }
 
         if (mDiscover != null) {
-            final ActivityDiscovery discover = mDiscover.get();
+            final DiscoveryActivity discover = mDiscover.get();
             if (discover != null) {
-                return Integer.parseInt(discover.getPrefs().getString(Prefs.KEY_TIMEOUT_DISCOVER,
-                        Prefs.DEFAULT_TIMEOUT_DISCOVER));
+                return Integer.parseInt(discover.getPrefs().getString(PreferencesActivity.KEY_TIMEOUT_DISCOVER,
+                        PreferencesActivity.DEFAULT_TIMEOUT_DISCOVER));
             }
         }
         return 1;
@@ -268,7 +268,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
         }
 
         if (mDiscover != null) {
-            final ActivityDiscovery discover = mDiscover.get();
+            final DiscoveryActivity discover = mDiscover.get();
             if (discover != null) {
 //            	Log.d(TAG, ">> ============ ");
 //            	Log.d(TAG, ">> Bean IP  = " + host.ipAddress);
@@ -301,8 +301,8 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 // Static
                 if ((host.hostname = mSave.getCustomName(host)) == null) {
                     // DNS
-                    if (discover.getPrefs().getBoolean(Prefs.KEY_RESOLVE_NAME,
-                            Prefs.DEFAULT_RESOLVE_NAME) == true) {
+                    if (discover.getPrefs().getBoolean(PreferencesActivity.KEY_RESOLVE_NAME,
+                            PreferencesActivity.DEFAULT_RESOLVE_NAME) == true) {
                         try {
                             host.hostname = (InetAddress.getByName(host.ipAddress)).getCanonicalHostName();
                         } catch (UnknownHostException e) {

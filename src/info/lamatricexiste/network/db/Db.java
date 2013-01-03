@@ -3,7 +3,7 @@
  * Licensed under GNU's GPL 2, see README
  */
 
-package info.lamatricexiste.network.utils;
+package info.lamatricexiste.network.db;
 
 import info.lamatricexiste.network.network.DownloadFile;
 

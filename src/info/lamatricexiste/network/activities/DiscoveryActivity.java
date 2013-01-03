@@ -6,15 +6,13 @@
 package info.lamatricexiste.network.activities;
 
 import info.lamatricexiste.network.R;
+import info.lamatricexiste.network.db.Save;
 import info.lamatricexiste.network.network.HostBean;
 import info.lamatricexiste.network.network.NetInfo;
 import info.lamatricexiste.network.tasks.AbstractDiscovery;
 import info.lamatricexiste.network.tasks.DefaultDiscovery;
 import info.lamatricexiste.network.tasks.DnsDiscovery;
 import info.lamatricexiste.network.utils.Export;
-import info.lamatricexiste.network.utils.Help;
-import info.lamatricexiste.network.utils.Prefs;
-import info.lamatricexiste.network.utils.Save;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -48,7 +46,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
-final public class ActivityDiscovery extends BaseNetActivity implements OnItemClickListener {
+final public class DiscoveryActivity extends BaseNetActivity implements OnItemClickListener {
 
     private final String TAG = "ActivityDiscovery";
     public final static long VIBRATE = (long) 250;
@@ -82,7 +80,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
         dialogIp.setPositiveButton(R.string.btn_scan, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dlg, int sumthin) {
                 // start scanportactivity
-                Intent intent = new Intent(ctxt, ActivityPortscan.class);
+                Intent intent = new Intent(ctxt, PortscanActivity.class);
                 intent.putExtra(HostBean.EXTRA_HOST, txt.getText().toString());
                 try {
                     intent.putExtra(HostBean.EXTRA_HOSTNAME, (InetAddress.getByName(txt.getText()
@@ -125,7 +123,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
             public void onClick(DialogInterface dlg, int sumthin) {
                 final String fileEdit = txt.getText().toString();
                 if (e.fileExists(fileEdit)) {
-                    AlertDialog.Builder fileExists = new AlertDialog.Builder(ActivityDiscovery.this);
+                    AlertDialog.Builder fileExists = new AlertDialog.Builder(DiscoveryActivity.this);
                     fileExists.setTitle(R.string.export_exists_title);
                     fileExists.setMessage(R.string.export_exists_msg);
                     fileExists.setPositiveButton(R.string.btn_yes,
@@ -201,7 +199,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
         Button btn_options = (Button) findViewById(R.id.btn_options);
         btn_options.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(ctxt, Prefs.class));
+                startActivity(new Intent(ctxt, PreferencesActivity.class));
             }
         });
 
@@ -236,20 +234,20 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, ActivityDiscovery.MENU_SCAN_SINGLE, 0, R.string.scan_single_title).setIcon(
+        menu.add(0, DiscoveryActivity.MENU_SCAN_SINGLE, 0, R.string.scan_single_title).setIcon(
                 android.R.drawable.ic_menu_mylocation);
-        menu.add(0, ActivityDiscovery.MENU_EXPORT, 0, R.string.preferences_export).setIcon(
+        menu.add(0, DiscoveryActivity.MENU_EXPORT, 0, R.string.preferences_export).setIcon(
                 android.R.drawable.ic_menu_save);
-        menu.add(0, ActivityDiscovery.MENU_OPTIONS, 0, R.string.btn_options).setIcon(
+        menu.add(0, DiscoveryActivity.MENU_OPTIONS, 0, R.string.btn_options).setIcon(
                 android.R.drawable.ic_menu_preferences);
-        menu.add(0, ActivityDiscovery.MENU_HELP, 0, R.string.preferences_help).setIcon(
+        menu.add(0, DiscoveryActivity.MENU_HELP, 0, R.string.preferences_help).setIcon(
                 android.R.drawable.ic_menu_help);
         return true;
     }
 
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final HostBean host = hosts.get(position);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityDiscovery.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(DiscoveryActivity.this);
         dialog.setTitle(R.string.discover_action_title);
         dialog.setItems(new CharSequence[] { getString(R.string.discover_action_scan),
                 getString(R.string.discover_action_rename) }, new OnClickListener() {
@@ -257,7 +255,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
                 switch (which) {
                     case 0:
                         // Start portscan
-                        Intent intent = new Intent(ctxt, ActivityPortscan.class);
+                        Intent intent = new Intent(ctxt, PortscanActivity.class);
                         intent.putExtra(EXTRA_WIFI, NetInfo.isConnected(ctxt));
                         intent.putExtra(HostBean.EXTRA, host);
                         startActivityForResult(intent, SCAN_PORT_RESULT);
@@ -272,7 +270,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
                         txt.setText(s.getCustomName(host));
 
                         final AlertDialog.Builder rename = new AlertDialog.Builder(
-                                ActivityDiscovery.this);
+                                DiscoveryActivity.this);
                         rename.setView(v);
                         rename.setTitle(R.string.discover_action_rename);
                         rename.setPositiveButton(R.string.btn_ok, new OnClickListener() {
@@ -281,7 +279,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
                                 host.hostname = name;
                                 s.setCustomName(name, host.getHardwareAddress());
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(ActivityDiscovery.this,
+                                Toast.makeText(DiscoveryActivity.this,
                                         R.string.discover_action_saved, Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -290,7 +288,7 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
                                 host.hostname = null;
                                 s.removeCustomName(host.getHardwareAddress());
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(ActivityDiscovery.this,
+                                Toast.makeText(DiscoveryActivity.this,
                                         R.string.discover_action_deleted, Toast.LENGTH_SHORT)
                                         .show();
                             }
@@ -307,16 +305,16 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case ActivityDiscovery.MENU_SCAN_SINGLE:
+            case DiscoveryActivity.MENU_SCAN_SINGLE:
                 scanSingle(this, null);
                 return true;
-            case ActivityDiscovery.MENU_OPTIONS:
-                startActivity(new Intent(ctxt, Prefs.class));
+            case DiscoveryActivity.MENU_OPTIONS:
+                startActivity(new Intent(ctxt, PreferencesActivity.class));
                 return true;
-            case ActivityDiscovery.MENU_HELP:
-                startActivity(new Intent(ctxt, Help.class));
+            case DiscoveryActivity.MENU_HELP:
+                startActivity(new Intent(ctxt, HelpActivity.class));
                 return true;
-            case ActivityDiscovery.MENU_EXPORT:
+            case DiscoveryActivity.MENU_EXPORT:
                 export();
                 return true;
         }
@@ -385,16 +383,16 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
 
         // Get ip information
         network_ip = NetInfo.getUnsignedLongFromIp(net.ip);
-        if (prefs.getBoolean(Prefs.KEY_IP_CUSTOM, Prefs.DEFAULT_IP_CUSTOM)) {
+        if (prefs.getBoolean(PreferencesActivity.KEY_IP_CUSTOM, PreferencesActivity.DEFAULT_IP_CUSTOM)) {
             // Custom IP
-            network_start = NetInfo.getUnsignedLongFromIp(prefs.getString(Prefs.KEY_IP_START,
-                    Prefs.DEFAULT_IP_START));
-            network_end = NetInfo.getUnsignedLongFromIp(prefs.getString(Prefs.KEY_IP_END,
-                    Prefs.DEFAULT_IP_END));
+            network_start = NetInfo.getUnsignedLongFromIp(prefs.getString(PreferencesActivity.KEY_IP_START,
+                    PreferencesActivity.DEFAULT_IP_START));
+            network_end = NetInfo.getUnsignedLongFromIp(prefs.getString(PreferencesActivity.KEY_IP_END,
+                    PreferencesActivity.DEFAULT_IP_END));
         } else {
             // Custom CIDR
-            if (prefs.getBoolean(Prefs.KEY_CIDR_CUSTOM, Prefs.DEFAULT_CIDR_CUSTOM)) {
-                net.cidr = Integer.parseInt(prefs.getString(Prefs.KEY_CIDR, Prefs.DEFAULT_CIDR));
+            if (prefs.getBoolean(PreferencesActivity.KEY_CIDR_CUSTOM, PreferencesActivity.DEFAULT_CIDR_CUSTOM)) {
+                net.cidr = Integer.parseInt(prefs.getString(PreferencesActivity.KEY_CIDR, PreferencesActivity.DEFAULT_CIDR));
             }
             // Detected IP
             int shift = (32 - net.cidr);
@@ -407,8 +405,8 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
             }
             // Reset ip start-end (is it really convenient ?)
             Editor edit = prefs.edit();
-            edit.putString(Prefs.KEY_IP_START, NetInfo.getIpFromLongUnsigned(network_start));
-            edit.putString(Prefs.KEY_IP_END, NetInfo.getIpFromLongUnsigned(network_end));
+            edit.putString(PreferencesActivity.KEY_IP_START, NetInfo.getIpFromLongUnsigned(network_start));
+            edit.putString(PreferencesActivity.KEY_IP_END, NetInfo.getIpFromLongUnsigned(network_end));
             edit.commit();
         }
     }
@@ -448,21 +446,21 @@ final public class ActivityDiscovery extends BaseNetActivity implements OnItemCl
     private void startDiscovering() {
         int method = 0;
         try {
-            method = Integer.parseInt(prefs.getString(Prefs.KEY_METHOD_DISCOVER,
-                    Prefs.DEFAULT_METHOD_DISCOVER));
+            method = Integer.parseInt(prefs.getString(PreferencesActivity.KEY_METHOD_DISCOVER,
+                    PreferencesActivity.DEFAULT_METHOD_DISCOVER));
         } catch (NumberFormatException e) {
             Log.e(TAG, e.getMessage());
         }
         switch (method) {
             case 1:
-                mDiscoveryTask = new DnsDiscovery(ActivityDiscovery.this);
+                mDiscoveryTask = new DnsDiscovery(DiscoveryActivity.this);
                 break;
             case 2:
                 // Root
                 break;
             case 0:
             default:
-                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this, info_ip_raw_str, info_mac_str);
+                mDiscoveryTask = new DefaultDiscovery(DiscoveryActivity.this, info_ip_raw_str, info_mac_str);
         }
         mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
         mDiscoveryTask.execute();

@@ -6,7 +6,7 @@
 //am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings
 package info.lamatricexiste.network.network;
 
-import info.lamatricexiste.network.utils.Prefs;
+import info.lamatricexiste.network.activities.PreferencesActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -79,18 +79,18 @@ public class NetInfo {
 
     @Override
     public int hashCode() {
-        int ip_custom = prefs.getBoolean(Prefs.KEY_IP_CUSTOM, Prefs.DEFAULT_IP_CUSTOM) ? 1:0;
-        int ip_start = prefs.getString(Prefs.KEY_IP_START, Prefs.DEFAULT_IP_START).hashCode();
-        int ip_end = prefs.getString(Prefs.KEY_IP_END, Prefs.DEFAULT_IP_END).hashCode();
-        int cidr_custom = prefs.getBoolean(Prefs.KEY_CIDR_CUSTOM, Prefs.DEFAULT_CIDR_CUSTOM) ? 1:0;
-        int cidr = prefs.getString(Prefs.KEY_CIDR, Prefs.DEFAULT_CIDR).hashCode();
+        int ip_custom = prefs.getBoolean(PreferencesActivity.KEY_IP_CUSTOM, PreferencesActivity.DEFAULT_IP_CUSTOM) ? 1:0;
+        int ip_start = prefs.getString(PreferencesActivity.KEY_IP_START, PreferencesActivity.DEFAULT_IP_START).hashCode();
+        int ip_end = prefs.getString(PreferencesActivity.KEY_IP_END, PreferencesActivity.DEFAULT_IP_END).hashCode();
+        int cidr_custom = prefs.getBoolean(PreferencesActivity.KEY_CIDR_CUSTOM, PreferencesActivity.DEFAULT_CIDR_CUSTOM) ? 1:0;
+        int cidr = prefs.getString(PreferencesActivity.KEY_CIDR, PreferencesActivity.DEFAULT_CIDR).hashCode();
         return 42 + intf.hashCode() + ip.hashCode() + cidr + ip_custom + ip_start + ip_end + cidr_custom + cidr;
     }
 
     public void getIp() {
-        intf = prefs.getString(Prefs.KEY_INTF, Prefs.DEFAULT_INTF);
+        intf = prefs.getString(PreferencesActivity.KEY_INTF, PreferencesActivity.DEFAULT_INTF);
         try {
-            if (intf == Prefs.DEFAULT_INTF || NOIF.equals(intf)) {
+            if (intf == PreferencesActivity.DEFAULT_INTF || NOIF.equals(intf)) {
                 // Automatic interface selection
                 for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en
                         .hasMoreElements();) {

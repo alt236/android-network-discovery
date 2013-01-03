@@ -5,11 +5,11 @@
 
 package info.lamatricexiste.network.tasks;
 
-import info.lamatricexiste.network.activities.ActivityDiscovery;
+import info.lamatricexiste.network.activities.DiscoveryActivity;
+import info.lamatricexiste.network.activities.PreferencesActivity;
 import info.lamatricexiste.network.network.HardwareAddress;
 import info.lamatricexiste.network.network.HostBean;
 import info.lamatricexiste.network.network.NetInfo;
-import info.lamatricexiste.network.utils.Prefs;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -21,21 +21,21 @@ public class DnsDiscovery extends AbstractDiscovery {
 
     private final String TAG = "DnsDiscovery";
 
-    public DnsDiscovery(ActivityDiscovery discover) {
+    public DnsDiscovery(DiscoveryActivity discover) {
         super(discover);
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         if (mDiscover != null) {
-            final ActivityDiscovery discover = mDiscover.get();
+            final DiscoveryActivity discover = mDiscover.get();
             if (discover != null) {
                 Log.i(TAG, "start=" + NetInfo.getIpFromLongUnsigned(start) + " (" + start
                         + "), end=" + NetInfo.getIpFromLongUnsigned(end) + " (" + end
                         + "), length=" + size);
 
-                int timeout = Integer.parseInt(discover.getPrefs().getString(Prefs.KEY_TIMEOUT_DISCOVER,
-                        Prefs.DEFAULT_TIMEOUT_DISCOVER));
+                int timeout = Integer.parseInt(discover.getPrefs().getString(PreferencesActivity.KEY_TIMEOUT_DISCOVER,
+                        PreferencesActivity.DEFAULT_TIMEOUT_DISCOVER));
                 Log.i(TAG, "timeout=" + timeout + "ms");
 
                 for (long i = start; i < end + 1; i++) {

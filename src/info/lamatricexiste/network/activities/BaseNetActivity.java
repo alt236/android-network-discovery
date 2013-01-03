@@ -2,7 +2,6 @@ package info.lamatricexiste.network.activities;
 
 import info.lamatricexiste.network.R;
 import info.lamatricexiste.network.network.NetInfo;
-import info.lamatricexiste.network.utils.Prefs;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -99,8 +98,8 @@ public abstract class BaseNetActivity extends SherlockActivity {
                             setButtons(false);
                         }
                     } else if (type == ConnectivityManager.TYPE_MOBILE) { // 3G
-                        if (prefs.getBoolean(Prefs.KEY_MOBILE, Prefs.DEFAULT_MOBILE)
-                                || prefs.getString(Prefs.KEY_INTF, Prefs.DEFAULT_INTF) != null) {
+                        if (prefs.getBoolean(PreferencesActivity.KEY_MOBILE, PreferencesActivity.DEFAULT_MOBILE)
+                                || prefs.getString(PreferencesActivity.KEY_INTF, PreferencesActivity.DEFAULT_INTF) != null) {
                             net.getMobileInfo();
                             if (net.carrier != null) {
                                 net.getIp();

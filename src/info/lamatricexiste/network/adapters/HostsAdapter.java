@@ -1,4 +1,4 @@
-package info.lamatricexiste.network.utils;
+package info.lamatricexiste.network.adapters;
 //package info.lamatricexiste.network.Utils;
 //
 //import info.lamatricexiste.network.R;

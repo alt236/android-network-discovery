@@ -10,12 +10,11 @@
     android:versionName="0.3.5" >
 
     <application
-        android:debuggable="false"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.ProjectDefault" >
         <activity
-            android:name=".activities.ActivityMain"
+            android:name="info.lamatricexiste.network.activities.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -25,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ActivityDiscovery"
+            android:name="info.lamatricexiste.network.activities.DiscoveryActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" />
         <activity
-            android:name=".activities.ActivityPortscan"
+            android:name="info.lamatricexiste.network.activities.PortscanActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:label="@string/app_name" >
             <intent-filter>
@@ -47,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".utils.Prefs"
+            android:name="info.lamatricexiste.network.activities.PreferencesActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -56,7 +55,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".utils.Help"
+            android:name="info.lamatricexiste.network.activities.HelpActivity"
             android:label="@string/app_name" />
     </application>
 

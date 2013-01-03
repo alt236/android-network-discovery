@@ -7,7 +7,7 @@
 
 package info.lamatricexiste.network.network;
 
-import info.lamatricexiste.network.activities.ActivityMain;
+import info.lamatricexiste.network.activities.MainActivity;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class DownloadFile {
     public DownloadFile(final Context ctxt, String url, FileOutputStream out) throws IOException, NullPointerException {
         String version = "0.3.x";
         try {
-            version = ctxt.getPackageManager().getPackageInfo(ActivityMain.TAG, 0).versionName;
+            version = ctxt.getPackageManager().getPackageInfo(MainActivity.TAG, 0).versionName;
         } catch (NameNotFoundException e) {
         }
 
